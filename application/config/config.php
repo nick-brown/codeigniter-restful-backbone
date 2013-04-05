@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= '';
+$config['base_url']	= 'http://localhost/codeigniter-restserver/';
 
 /*
 |--------------------------------------------------------------------------
@@ -354,6 +354,25 @@ $config['rewrite_short_tags'] = FALSE;
 |
 */
 $config['proxy_ips'] = '';
+
+
+/*
+|--------------------------------------------------------------------------
+| Class Autoloader
+|--------------------------------------------------------------------------
+|
+| If a class is not loaded when it is referenced, attempt to find it in the
+| application/core directory and automatically load it.  Will intentionally
+| bypass classes that begin with the CI_ prefix.
+|
+*/
+function __autoload($class)
+{
+    if (strpos($class, 'CI_') !== 0)
+    {
+        @include_once(APPPATH . 'core/' . $class . EXT);
+    }
+}
 
 
 /* End of file config.php */
