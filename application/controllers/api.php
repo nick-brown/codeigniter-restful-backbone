@@ -7,11 +7,6 @@
         public function __construct()
         {
             parent::__construct();
-            $this->data = [
-                1 => ['id' => 1, 'name' => 'img1000.jpg'],
-                2 => ['id' => 2, 'name' => 'img1001.jpg'],
-                3 => ['id' => 3, 'name' => 'img1002.jpg'],
-            ];
 
             $this->load->model('api_model');
         }
