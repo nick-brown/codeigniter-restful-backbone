@@ -49,65 +49,64 @@
         // Update
         public function images_put()
         {
-            $result = $this->api_model->update($this->put('id'), [
-                                                                 'caption'  => $this->put('caption'),
-                                                                 'cutting' => $this->put('cutting'),
-                                                                 'sidebar' => $this->put('sidebar'),
-                                                                 'engraving' => $this->put('engraving'),
-                                                                 'marking' => $this->put('marking'),
-                                                                 'imaging' => $this->put('imaging'),
-                                                                 ]);
-            if ($result === FALSE)
-            {
-                $this->response(array('status' => 'failed'));
-            }
+            $values = [
+                'caption'   => $this->put('caption'),
+                'cutting'   => $this->put('cutting'),
+                'sidebar'   => $this->put('sidebar'),
+                'engraving' => $this->put('engraving'),
+                'marking'   => $this->put('marking'),
+                'imaging'   => $this->put('imaging'),
+            ];
 
-            else
+            $result = $this->api_model->update( $values, $this->put('id') );
+
+            if ($result)
             {
                 $this->response(array('status' => 'success'));
+            }
+            else
+            {
+                $this->response(array('status' => 'failed'));
             }
         }
 
         public function images_post()
         {
-            $result = $this->api_model->create_image([
-                                                     'name' => $this->input->post('name'),
-                                                     'cutting' => $this->input->post('cutting'),
-                                                     'sidebar' => $this->input->post('sidebar'),
-                                                     'engraving' => $this->input->post('engraving'),
-                                                     'marking' => $this->input->post('marking'),
-                                                     'imaging' => $this->input->post('imaging'),
-                                                     'caption' => $this->post('caption'),
-                                                     'material_id' => $this->input->post('material_id')
-                                                     ]);
 
-            if ($result === FALSE)
-            {
-                $this->response(array('status' => 'failed'));
-            }
+            $values = [
+                'name' => $this->input->post('name'),
+                'cutting' => $this->input->post('cutting'),
+                'sidebar' => $this->input->post('sidebar'),
+                'engraving' => $this->input->post('engraving'),
+                'marking' => $this->input->post('marking'),
+                'imaging' => $this->input->post('imaging'),
+                'caption' => $this->post('caption'),
+                'material_id' => $this->input->post('material_id')
+            ];
 
-            else
+            $result = $this->api_model->update($values);
+
+            if ($result)
             {
                 $this->response(array('status' => 'success'));
+            }
+            else
+            {
+                $this->response(array('status' => 'failed'));
             }
         }
 
         public function images_delete($id)
         {
-            $result = $this->api_model->delete_image($id);
+            $result = $this->api_model->delete($id);
 
             if ($result === FALSE)
             {
                 $this->response(array('status' => 'failed'));
             }
-
             else
             {
                 $this->response(array('status' => 'success'));
             }
         }
-
-
-
-
     }

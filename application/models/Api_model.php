@@ -2,7 +2,7 @@
 
     class Api_model extends CI_Model {
 
-        protected $_table_name = 'ml_images';
+        protected $_table_name = '';
         protected $_primary_key = 'id';
 
         public function __construct()
@@ -30,26 +30,28 @@
             return $this->db->get($this->_table_name)->$method();
         }
 
-        public function update($id, $values)
+        public function update($values, $id = NULL)
         {
-            @$this->db
-                ->where('id', $id)
-                ->update('ml_images', $values);
+            if ($id === NULL)
+            {
+                $this->db->insert($this->_table_name, $values);
 
-            return $this->db->affected_rows() > 0 ? TRUE : FALSE;
+                $id = $this->db->insert_id();
+            }
+            else
+            {
+                $this->db
+                    ->where($this->_primary_key, $id)
+                    ->update($this->_table_name, $values);
+            }
+
+            return $id;
         }
 
-        public function create_image($values)
+        public function delete($id)
         {
-            $this->db->insert('ml_images', $values);
+            $this->db->delete($this->_table_name, [$this->_primary_key => $id]);
 
-            return $this->db->insert_id() > 0 ? $this->db->insert_id() : FALSE;
-        }
-
-        public function delete_image($id)
-        {
-            $this->db->delete('ml_images', ['id' => $id]);
-
-            return $this->db->affected_rows() === 1 ? TRUE : FALSE;
+            return $this->db->affected_rows() === 1 ? $id : FALSE;
         }
     }
