@@ -3,37 +3,17 @@
     exit('No direct script access allowed');
 }
 
-    class Api extends REST_Controller {
+    class Images extends REST_Controller {
         public function __construct()
         {
             parent::__construct();
 
-            $this->load->model('api_model');
+            $this->load->model('image_model');
         }
 
-        public function image_get()
+        public function index_get()
         {
-            if (! $this->get('id'))
-            {
-                $this->response(NULL, 400);
-            }
-
-            $image = $this->api_model->get( $this->get('id') );
-
-            if ($image)
-            {
-                $this->response($image, 200); // 200 being the HTTP response code
-            }
-
-            else
-            {
-                $this->response(array('error' => 'Image could not be found'), 404);
-            }
-        }
-
-        public function images_get()
-        {
-            $images = $this->api_model->get( NULL, $this->get('limit') );
+            $images = $this->image_model->get( NULL, $this->get('limit') );
 
             if ($images)
             {
@@ -43,6 +23,26 @@
             else
             {
                 $this->response(array('error' => 'Couldn\'t find any images!'), 404);
+            }
+        }
+
+        public function image_get()
+        {
+            if (! $this->get('id'))
+            {
+                $this->response(NULL, 400);
+            }
+
+            $image = $this->image_model->get( $this->get('id') );
+
+            if ($image)
+            {
+                $this->response($image, 200); // 200 being the HTTP response code
+            }
+
+            else
+            {
+                $this->response(array('error' => 'Image could not be found'), 404);
             }
         }
 
@@ -58,7 +58,7 @@
                 'imaging'   => $this->put('imaging'),
             ];
 
-            $result = $this->api_model->update( $values, $this->put('id') );
+            $result = $this->image_model->update( $values, $this->put('id') );
 
             if ($result)
             {
@@ -84,7 +84,7 @@
                 'material_id' => $this->input->post('material_id')
             ];
 
-            $result = $this->api_model->update($values);
+            $result = $this->image_model->update($values);
 
             if ($result)
             {
@@ -98,7 +98,7 @@
 
         public function images_delete($id)
         {
-            $result = $this->api_model->delete($id);
+            $result = $this->image_model->delete($id);
 
             if ($result === FALSE)
             {

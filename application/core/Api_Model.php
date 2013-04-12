@@ -1,6 +1,6 @@
 <?php
 
-    class Api_model extends CI_Model {
+    class Api_Model extends CI_Model {
 
         protected $_table_name = '';
         protected $_primary_key = 'id';
