@@ -1,28 +1,36 @@
 <?php
 
     class Api_model extends CI_Model {
-        public function get($id)
-        {
-            $q = $this->db->get_where('ml_images', ['id' => $id]);
 
-            return $q->num_rows() === 1 ? $q->row() : FALSE;
+        protected $_table_name = 'ml_images';
+        protected $_primary_key = 'id';
+
+        public function __construct()
+        {
+            parent::__construct();
         }
 
-        public function get_all($limit = NULL)
+        public function get($id = NULL, $limit = NULL)
         {
-            if (empty($limit))
+            if ($id !== NULL)
             {
-                $q = $this->db->get('ml_images');
+                $this->db->where($this->_primary_key, $id);
+
+                $method = 'row';
             }
             else
             {
-                $q = $this->db->get('ml_images', $limit);
+                $limit = empty($limit) ? '18446744073709551615' : $limit;
+
+                $this->db->limit($limit);
+
+                $method = 'result';
             }
 
-            return $q->num_rows() > 0 ? $q->result() : FALSE;
+            return $this->db->get($this->_table_name)->$method();
         }
 
-        public function update_image($id, $values)
+        public function update($id, $values)
         {
             @$this->db
                 ->where('id', $id)

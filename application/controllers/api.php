@@ -18,7 +18,7 @@
                 $this->response(NULL, 400);
             }
 
-            $image = $this->api_model->get($this->get('id'));
+            $image = $this->api_model->get( $this->get('id') );
 
             if ($image)
             {
@@ -33,7 +33,7 @@
 
         public function images_get()
         {
-            $images = $this->api_model->get_all($this->get('limit'));
+            $images = $this->api_model->get( NULL, $this->get('limit') );
 
             if ($images)
             {
@@ -49,8 +49,13 @@
         // Update
         public function images_put()
         {
-            $result = $this->api_model->update_image($this->put('id'), [
+            $result = $this->api_model->update($this->put('id'), [
                                                                  'caption'  => $this->put('caption'),
+                                                                 'cutting' => $this->put('cutting'),
+                                                                 'sidebar' => $this->put('sidebar'),
+                                                                 'engraving' => $this->put('engraving'),
+                                                                 'marking' => $this->put('marking'),
+                                                                 'imaging' => $this->put('imaging'),
                                                                  ]);
             if ($result === FALSE)
             {
@@ -101,4 +106,8 @@
                 $this->response(array('status' => 'success'));
             }
         }
+
+
+
+
     }
