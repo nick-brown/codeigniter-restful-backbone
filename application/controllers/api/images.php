@@ -19,7 +19,7 @@
             }
             else
             {
-                $image = $this->image_model->get( NULL, $this->get('limit') );
+                $image = $this->image_model->get(NULL, $this->get('limit'));
             }
 
             if ($image)
@@ -37,12 +37,7 @@
         public function image_put()
         {
             $values = [
-                'caption'   => $this->put('caption'),
-                'cutting'   => $this->put('cutting'),
-                'sidebar'   => $this->put('sidebar'),
-                'engraving' => $this->put('engraving'),
-                'marking'   => $this->put('marking'),
-                'imaging'   => $this->put('imaging'),
+                'caption' => $this->put('caption'),
             ];
 
             $result = $this->image_model->update( $values, $this->put('id') );
@@ -60,17 +55,11 @@
         public function image_post()
         {
             $values = [
-                'name' => $this->input->post('name'),
-                'cutting' => $this->input->post('cutting'),
-                'sidebar' => $this->input->post('sidebar'),
-                'engraving' => $this->input->post('engraving'),
-                'marking' => $this->input->post('marking'),
-                'imaging' => $this->input->post('imaging'),
-                'caption' => $this->post('caption'),
-                'material_id' => $this->input->post('material_id')
+                'name'    => $this->input->post('name'),
+                'caption' => $this->post('caption')
             ];
 
-            $result = $this->image_model->update($values);
+            $result = $this->image_model->update( $values );
 
             if ($result)
             {
