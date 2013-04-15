@@ -3,7 +3,7 @@
     exit('No direct script access allowed');
 }
 
-    class Rest extends REST_Controller {
+    class Images extends REST_Controller {
         public function __construct()
         {
             parent::__construct();
