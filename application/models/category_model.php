@@ -1,6 +1,6 @@
 <?php
 
-    class Image_model extends Api_model {
+    class Category_model extends Api_model {
 
         protected $_table_name = 'ml_categories';
         protected $_primary_key = 'id';

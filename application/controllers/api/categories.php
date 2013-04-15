@@ -3,17 +3,17 @@
     exit('No direct script access allowed');
 }
 
-    class Images extends REST_Controller {
+    class Categories extends REST_Controller {
         public function __construct()
         {
             parent::__construct();
 
-            $this->load->model('image_model');
+            $this->load->model('category_model');
         }
 
         public function index_get()
         {
-            $images = $this->image_model->get( NULL, $this->get('limit') );
+            $images = $this->category_model->get( NULL, $this->get('limit') );
 
             if ($images)
             {
@@ -26,18 +26,18 @@
             }
         }
 
-        public function image_get()
+        public function category_get()
         {
             if (! $this->get('id'))
             {
                 $this->response(NULL, 400);
             }
 
-            $image = $this->image_model->get( $this->get('id') );
+            $category = $this->category_model->get( $this->get('id') );
 
-            if ($image)
+            if ($category)
             {
-                $this->response($image, 200); // 200 being the HTTP response code
+                $this->response($category, 200); // 200 being the HTTP response code
             }
 
             else
@@ -47,18 +47,16 @@
         }
 
         // Update
-        public function images_put()
+        public function categories_put()
         {
             $values = [
-                'caption'   => $this->put('caption'),
-                'cutting'   => $this->put('cutting'),
-                'sidebar'   => $this->put('sidebar'),
-                'engraving' => $this->put('engraving'),
-                'marking'   => $this->put('marking'),
-                'imaging'   => $this->put('imaging'),
+                'id' => $this->put('id'),
+                'parent_id' => $this->put('parent_id'),
+                'category' => $this->put('category'),
+                'level' => $this->put('level')
             ];
 
-            $result = $this->image_model->update( $values, $this->put('id') );
+            $result = $this->category_model->update( $values, $this->put('id') );
 
             if ($result)
             {
@@ -70,21 +68,17 @@
             }
         }
 
-        public function images_post()
+        public function categories_post()
         {
 
             $values = [
-                'name' => $this->input->post('name'),
-                'cutting' => $this->input->post('cutting'),
-                'sidebar' => $this->input->post('sidebar'),
-                'engraving' => $this->input->post('engraving'),
-                'marking' => $this->input->post('marking'),
-                'imaging' => $this->input->post('imaging'),
-                'caption' => $this->post('caption'),
-                'material_id' => $this->input->post('material_id')
+                'id' => $this->put('id'),
+                'parent_id' => $this->put('parent_id'),
+                'category' => $this->put('category'),
+                'level' => $this->put('level')
             ];
 
-            $result = $this->image_model->update($values);
+            $result = $this->category_model->update($values);
 
             if ($result)
             {
@@ -96,9 +90,9 @@
             }
         }
 
-        public function images_delete($id)
+        public function categories_delete($id)
         {
-            $result = $this->image_model->delete($id);
+            $result = $this->category_model->delete($id);
 
             if ($result === FALSE)
             {
